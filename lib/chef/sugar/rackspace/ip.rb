@@ -21,7 +21,7 @@ class Chef
         end
 
         ## Return the first ip address in ips
-        return net['ips'].pop['ip']
+        return net['ips'].first['ip']
       end
 
       def best_rackspace_ip_for(node, other)
@@ -37,7 +37,7 @@ class Chef
           node_clnet.each_key do |node_label|
             other_clnet.each_key do |other_label|
               if node_label == other_label
-                ip = other_clnet[node_label]['ips'].pop['ip']
+                ip = other_clnet[node_label]['ips'].first['ip']
               end
             end
           end
@@ -65,6 +65,20 @@ class Chef
         end
 
         return networks
+      end
+    end
+
+    module DSL
+      def cloud_network_ip(label=nil)
+        Chef::Sugar::IP.cloud_network_ip(node, label)
+      end
+
+      def cloud_networks
+        Chef::Sugar::IP.cloud_networks(node)
+      end
+
+      def best_rackspace_ip_for(other)
+        Chef::Sugar::IP.best_rackspace_ip_for(node, other)
       end
     end
   end
