@@ -1,5 +1,7 @@
 chef-sugar-rackspace
 ====================
+[![Gem Version](https://badge.fury.io/rb/chef-sugar-rackspace.svg)](http://badge.fury.io/rb/chef-sugar-rackspace)
+
 Chef Sugar Extensions useful if you use Rackspace as a provider
 
 Usage
