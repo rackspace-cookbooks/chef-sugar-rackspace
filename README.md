@@ -12,6 +12,18 @@ Include it in your Chef recipes:
 include_recipe 'chef-sugar-rackspace::default'
 ```
 
+### Rackconnect
+Rackconnect helpers require the [Rackconnect Ohai plugin](https://github.com/jarosser06/ohai-rackconnect) to be installed.
+
+- `rackconnected?` - return true if the node is rackconnected
+
+#### rackconnected?
+```ruby
+unless rackconnected?
+  include_recipes 'firewall'
+end
+```
+
 ### IP
 - `cloud_network_ip` - return the node's ip from a Rackspace cloud network
 - `best_rackspace_ip_for` - determine the best IP address for a given node, preferring a cloud network IP address
