@@ -9,7 +9,7 @@ class Chef
       ## if no label is passed and more than one cloud
       ## network is attached it will pop the first off
       ## the array
-      def cloud_network_ip(node, label=nil)
+      def cloud_network_ip(node, label = nil)
         networks = cloud_networks(node)
         return '' if networks.empty?
 
@@ -21,40 +21,37 @@ class Chef
         end
 
         ## Return the first ip address in ips
-        return net['ips'].first['ip']
+        net['ips'].first['ip']
       end
 
       def best_rackspace_ip_for(node, other)
-        begin
-          ## Fail early if either node has no cloud networks
-          node_clnet = cloud_networks(node)
-          fail if node_clnet.empty?
+        node_clnet = cloud_networks(node)
+        fail 'no cloud networks found for this node' if node_clnet.empty?
 
-          other_clnet = cloud_networks(other)
-          fail if other_clnet.empty?
+        other_clnet = cloud_networks(other)
+        fail 'no cloud networks found for other node' if other_clnet.empty?
 
-          ip = nil
-          node_clnet.each_key do |node_label|
-            other_clnet.each_key do |other_label|
-              if node_label == other_label
-                ip = other_clnet[node_label]['ips'].first['ip']
-              end
+        ip = nil
+        node_clnet.each_key do |node_label|
+          other_clnet.each_key do |other_label|
+            if node_label == other_label
+              ip = other_clnet[node_label]['ips'].first['ip']
             end
           end
-
-          # Couldn't locate a matching cloud network, falling through
-          fail if ip.nil?
-
-          return ip
-        rescue
-          best_ip_for(node, other)
         end
+
+        # Couldn't locate a matching cloud network, falling through
+        fail 'could not locate a matching cloud network' if ip.nil?
+
+        return ip
+      rescue
+        best_ip_for(node, other)
       end
 
       def cloud_networks(node)
         networks = {}
-        return networks unless node.has_key? 'rackspace'
-        if node['rackspace'].has_key? 'private_networks'
+        return networks unless node.key? 'rackspace'
+        if node['rackspace'].key? 'private_networks'
           private_networks = node['rackspace']['private_networks']
 
           unless private_networks.nil? || private_networks.empty?
@@ -64,12 +61,12 @@ class Chef
           end
         end
 
-        return networks
+        networks
       end
     end
 
     module DSL
-      def cloud_network_ip(label=nil)
+      def cloud_network_ip(label = nil)
         Chef::Sugar::IP.cloud_network_ip(node, label)
       end
 

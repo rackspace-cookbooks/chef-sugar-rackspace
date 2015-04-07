@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Chef::Sugar::IP do
-
   fake_node = {
     'cloud' => {
       'public_ipv4' => '23.253.110.230',
@@ -38,14 +37,14 @@ describe Chef::Sugar::IP do
   context 'when on different cloud networks' do
     before do
       node['rackspace']['private_networks'] = [{
-            'ips' => [{ 'ip' => '192.168.10.2' }],
-            'label' => 'myprivatenet1'
-          }]
+        'ips' => [{ 'ip' => '192.168.10.2' }],
+        'label' => 'myprivatenet1'
+      }]
 
       other['rackspace']['private_networks'] = [{
-          'ips' => [{ 'ip' => '192.168.12.4' }],
-          'label' => 'myprivatenet2'
-        }]
+        'ips' => [{ 'ip' => '192.168.12.4' }],
+        'label' => 'myprivatenet2'
+      }]
     end
     it '#best_rackspace_ip_for returns the service net ip address' do
       expect(described_class.best_rackspace_ip_for(node, other)).to eq(other['cloud']['local_ipv4'])
@@ -59,14 +58,14 @@ describe Chef::Sugar::IP do
   context 'when on the same cloud network' do
     before do
       node['rackspace']['private_networks'] = [{
-           'ips' => [{ 'ip' => '192.168.10.2' }],
-           'label' => 'myprivatenet1'
-        }]
+        'ips' => [{ 'ip' => '192.168.10.2' }],
+        'label' => 'myprivatenet1'
+      }]
 
       other['rackspace']['private_networks'] = [{
-          'ips' => [{ 'ip' => '192.168.10.4' }],
-          'label' => 'myprivatenet1'
-        }]
+        'ips' => [{ 'ip' => '192.168.10.4' }],
+        'label' => 'myprivatenet1'
+      }]
     end
     it '#best_rackspace_ip_for returns other\'s cloud network ip address' do
       expect(described_class.best_rackspace_ip_for(node, other)).to eq('192.168.10.4')
