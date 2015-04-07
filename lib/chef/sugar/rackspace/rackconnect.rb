@@ -6,8 +6,8 @@ class Chef
       extend self
 
       def rackconnected?(node)
-        return false unless node.has_key? 'rackspace'
-        if node['rackspace'].has_key? 'rackconnect'
+        return false unless node.key? 'rackspace'
+        if node['rackspace'].key? 'rackconnect'
           return node['rackspace']['rackconnect']['enabled']
         else
           fail 'must have rackconnect ohai plugin installed'
