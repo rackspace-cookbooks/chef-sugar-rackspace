@@ -8,8 +8,8 @@ describe Chef::Sugar::Rackconnect do
   let(:node)  { fake_node }
 
   context 'when the ohai plugin is not found' do
-    it '#rackconnected? raises an error' do
-      expect { described_class.rackconnected?(node) }.to raise_error(RuntimeError)
+    it '#rackconnected? returns false' do
+      expect(described_class.rackconnected?(node)).to eq(false)
     end
   end
 
