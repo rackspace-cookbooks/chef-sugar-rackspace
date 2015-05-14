@@ -10,7 +10,7 @@ class Chef
         if node['rackspace'].key? 'rackconnect'
           return node['rackspace']['rackconnect']['enabled']
         else
-          fail 'must have rackconnect ohai plugin installed'
+          return false
         end
       end
     end

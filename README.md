@@ -17,6 +17,11 @@ Rackconnect helpers require the [Rackconnect Ohai plugin](https://github.com/jar
 
 - `rackconnected?` - return true if the node is rackconnected
 
+####Note
+If the rackconnect plugin is not installed but the helper is called
+rackconnected? will return false.  This should not be an issue in most
+cases but could cause unexepected results on a rackconnected server.
+
 #### rackconnected?
 ```ruby
 unless rackconnected?
