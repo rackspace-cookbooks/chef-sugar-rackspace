@@ -38,4 +38,38 @@ describe Chef::Sugar::Rackconnect do
       expect(described_class.rackconnected?(node)).to eq(false)
     end
   end
+
+  context 'when rackconnect v3' do
+    before do
+      node['rackspace'] = {
+        'rackconnect' => {
+          'enabled' => true,
+          'version' => 3
+        }
+      }
+    end
+    it '#rackconnect_v3? returns true' do
+      expect(described_class.rackconnect_v3?(node)).to eq(true)
+    end
+    it '#rackconnect_v2? returns false' do
+      expect(described_class.rackconnect_v2?(node)).to eq(false)
+    end
+  end
+
+  context 'when rackconnect v2' do
+    before do
+      node['rackspace'] = {
+        'rackconnect' => {
+          'enabled' => true,
+          'version' => 2
+        }
+      }
+    end
+    it '#rackconnect_v3? returns false' do
+      expect(described_class.rackconnect_v3?(node)).to eq(false)
+    end
+    it '#rackconnect_v2? returns true' do
+      expect(described_class.rackconnect_v2?(node)).to eq(true)
+    end
+  end
 end
