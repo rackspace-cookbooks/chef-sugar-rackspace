@@ -5,7 +5,7 @@ describe Chef::Sugar::Rackconnect do
     'rackspace' => {}
   }
 
-  let(:node)  { fake_node }
+  let(:node) { fake_node }
 
   context 'when the ohai plugin is not found' do
     it '#rackconnected? returns false' do

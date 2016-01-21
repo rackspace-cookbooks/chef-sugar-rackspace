@@ -6,11 +6,11 @@ class Chef
       extend self
 
       def rackconnect_v2?(node)
-        return node['rackspace']['rackconnect']['version'] == 2
+        node['rackspace']['rackconnect']['version'] == 2
       end
 
       def rackconnect_v3?(node)
-        return node['rackspace']['rackconnect']['version'] == 3
+        node['rackspace']['rackconnect']['version'] == 3
       end
 
       def rackconnected?(node)
