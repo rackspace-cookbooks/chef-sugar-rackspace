@@ -13,12 +13,7 @@ class Chef
         networks = cloud_networks(node)
         return '' if networks.empty?
 
-        net = nil
-        if label.nil?
-          net = networks[networks.flatten.first]
-        else
-          net = networks[label]
-        end
+        net = label.nil? ? networks[networks.flatten.first] : networks[label]
 
         ## Return the first ip address in ips
         net['ips'].first['ip']
